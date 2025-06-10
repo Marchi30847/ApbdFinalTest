@@ -12,7 +12,7 @@ public class PublishingHouseService : IPublishingHouseService
     
     public PublishingHouseService(AppDbContext db) => _db = db;
     
-    public async Task<List<GetAllPublishingHousesResponse>> GetAllPublishingHousesAsync()
+    public async Task<List<GetAllPublishingHousesResponse>> GetAllPublishingHousesAsync(string? city, string? country)
     {
         var bookHouses = await _db.PublishingHouses
             .Include(ph => ph.Books)
@@ -25,6 +25,11 @@ public class PublishingHouseService : IPublishingHouseService
             .ThenBy(ph => ph.Name)
             .AsNoTracking()
             .ToListAsync();
+        
+        if (city != null) 
+            bookHouses = bookHouses.Where(ph => ph.City == city).ToList();
+        if (country != null)
+            bookHouses = bookHouses.Where(ph => ph.Country == country).ToList();
         
         var mapped = bookHouses
             .Select(bh => bh.ToResponse())

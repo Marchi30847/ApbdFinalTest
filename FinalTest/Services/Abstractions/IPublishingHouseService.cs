@@ -4,5 +4,5 @@ namespace FinalTest.Services.Abstractions;
 
 public interface IPublishingHouseService
 {
-    Task<List<GetAllPublishingHousesResponse>> GetAllPublishingHousesAsync();
+    Task<List<GetAllPublishingHousesResponse>> GetAllPublishingHousesAsync(string? city, string? country);
 }

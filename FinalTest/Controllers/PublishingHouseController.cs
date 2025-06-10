@@ -15,9 +15,10 @@ public class PublishingHouseController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(List<GetAllPublishingHousesResponse>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<GetAllPublishingHousesResponse>>> GetAllPublishingHouses()
+    public async Task<ActionResult<IEnumerable<GetAllPublishingHousesResponse>>> GetAllPublishingHouses(
+        [FromQuery] string? city, string? country)
     {
-        var result = await _publishingHouseService.GetAllPublishingHousesAsync();
+        var result = await _publishingHouseService.GetAllPublishingHousesAsync(city, country);
         return Ok(result);
     }
 }
